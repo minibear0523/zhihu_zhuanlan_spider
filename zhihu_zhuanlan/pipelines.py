@@ -33,13 +33,19 @@ class DBPipeline(object):
     def process_item(self, item, spider):
         # insert item into database table
         if isinstance(item, UserItem):
-            self.cur.execute(InsertUserItemSql, format_item_sql(item))
-            self.conn.commit()
+            try:
+                self.cur.execute(InsertUserItemSql, format_item_sql(item))
+                self.conn.commit()
+            except psycopg2.DatabaseError:
+                self.conn.rollback()
             return item
 
         elif isinstance(item, PostItem):
-            self.cur.execute(InsertPostItemSql, format_item_sql(item))
-            self.conn.commit()
+            try:
+                self.cur.execute(InsertPostItemSql, format_item_sql(item))
+                self.conn.commit()
+            except psycopg2.DatabaseError:
+                self.conn.rollback()
             return item
 
         else:
