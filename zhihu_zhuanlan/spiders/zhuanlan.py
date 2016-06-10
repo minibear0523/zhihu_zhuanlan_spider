@@ -17,6 +17,10 @@ class ZhuanlanSpider(scrapy.Spider):
         'https://zhuanlan.zhihu.com/api/columns/eatalone',
         'https://zhuanlan.zhihu.com/api/columns/eatright',
         'https://zhuanlan.zhihu.com/api/columns/oh-hard',
+        'https://zhuanlan.zhihu.com/api/columns/xiepanda',
+        'https://zhuanlan.zhihu.com/api/columns/huizi',
+        'https://zhuanlan.zhihu.com/api/columns/luzern',
+        'https://zhuanlan.zhihu.com/api/columns/vivivvv',
     )
 
     def parse(self, response):
