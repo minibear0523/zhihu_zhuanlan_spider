@@ -13,9 +13,9 @@ class ZhuanlanSpider(scrapy.Spider):
     name = "zhuanlan"
     allowed_domains = ["zhihu.com"]
     start_urls = (
-        # 'https://zhuanlan.zhihu.com/api/columns/eateateatonlyknoweat',
-        # 'https://zhuanlan.zhihu.com/api/columns/eatalone',
-        # 'https://zhuanlan.zhihu.com/api/columns/eatright',
+        'https://zhuanlan.zhihu.com/api/columns/eateateatonlyknoweat',
+        'https://zhuanlan.zhihu.com/api/columns/eatalone',
+        'https://zhuanlan.zhihu.com/api/columns/eatright',
         'https://zhuanlan.zhihu.com/api/columns/oh-hard',
     )
 
