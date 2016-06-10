@@ -13,9 +13,10 @@ class ZhuanlanSpider(scrapy.Spider):
     name = "zhuanlan"
     allowed_domains = ["zhihu.com"]
     start_urls = (
-        'https://zhuanlan.zhihu.com/api/columns/eateateatonlyknoweat',
-        'https://zhuanlan.zhihu.com/api/columns/eatalone',
-        'https://zhuanlan.zhihu.com/api/columns/eatright',
+        # 'https://zhuanlan.zhihu.com/api/columns/eateateatonlyknoweat',
+        # 'https://zhuanlan.zhihu.com/api/columns/eatalone',
+        # 'https://zhuanlan.zhihu.com/api/columns/eatright',
+        'https://zhuanlan.zhihu.com/api/columns/oh-hard',
     )
 
     def parse(self, response):
@@ -41,7 +42,19 @@ class ZhuanlanSpider(scrapy.Spider):
             url = HOST.format(slug, post_count)
             yield scrapy.Request(url, callback=self.parse_posts_list)
         else:
-            url = HOST.format(slug, LIMIT_MAX) + "&offset=100"
+            # postsCount > 100, split posts
+            # yield request less than 100
+            url = HOST.format(slug, LIMIT_MAX)
+            yield scrapy.Request(url, callback=self.parse_posts_list)
+
+            # yield request more than 100
+            count = post_count / 100
+            for i in range(1, count):
+                url = HOST.format(slug, LIMIT_MAX) + "&offset=" + str(i * LIMIT_MAX)
+                yield scrapy.Request(url, callback=self.parse_posts_list)
+
+            # yield the rest request
+            url = HOST.format(slug, post_count - count * 100) + "&offset=" + str(count * LIMIT_MAX)
             yield scrapy.Request(url, callback=self.parse_posts_list)
 
     def parse_posts_list(self, response):

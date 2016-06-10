@@ -8,6 +8,16 @@ InsertUserItemSql = "INSERT INTO author (hash, bio, name, slug, description) VAL
 InsertPostItemSql = "INSERT INTO post (source_url, url, title, title_image, summary, content, href, slug, likes_count, comments_count, author) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
 
 
+def format_item_sql(item):
+    if isinstance(item, UserItem):
+        return item['hash'], item['bio'], item['name'], item['slug'], item['description']
+    elif isinstance(item, PostItem):
+        return item['source_url'], item['url'], item['title'], item['title_image'], item['summary'], item['content'], \
+               item['href'], item['slug'], item['likes_count'], item['comments_count'], item['author_hash']
+    else:
+        return None
+
+
 class DBPipeline(object):
     """
     Store items into postgreSQL database with psycopg2
@@ -23,12 +33,12 @@ class DBPipeline(object):
     def process_item(self, item, spider):
         # insert item into database table
         if isinstance(item, UserItem):
-            self.cur.execute(InsertUserItemSql, item.format_sql())
+            self.cur.execute(InsertUserItemSql, format_item_sql(item))
             self.conn.commit()
             return item
 
         elif isinstance(item, PostItem):
-            self.cur.execute(InsertPostItemSql, item.format_sql())
+            self.cur.execute(InsertPostItemSql, format_item_sql(item))
             self.conn.commit()
             return item
 
