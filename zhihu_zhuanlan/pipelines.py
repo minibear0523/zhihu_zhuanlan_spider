@@ -5,7 +5,7 @@ from scrapy.exceptions import DropItem
 import psycopg2
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 InsertUserItemSql = "INSERT INTO author (hash, bio, name, slug, description) VALUES (%s, %s, %s, %s, %s);"
-InsertPostItemSql = "INSERT INTO post (source_url, url, title, title_image, summary, content, href, slug, likes_count, comments_count, author) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+InsertPostItemSql = "INSERT INTO post (source_url, url, title, title_image, summary, content, href, slug, likes_count, comments_count, published_time,author) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
 
 
 def format_item_sql(item):
@@ -13,7 +13,7 @@ def format_item_sql(item):
         return item['hash'], item['bio'], item['name'], item['slug'], item['description']
     elif isinstance(item, PostItem):
         return item['source_url'], item['url'], item['title'], item['title_image'], item['summary'], item['content'], \
-               item['href'], item['slug'], item['likes_count'], item['comments_count'], item['author_hash']
+               item['href'], item['slug'], item['likes_count'], item['comments_count'], item['published_time'], item['author_hash']
     else:
         return None
 

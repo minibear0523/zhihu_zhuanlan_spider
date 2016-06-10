@@ -21,5 +21,6 @@ CREATE TABLE post (
     slug integer unique,
     likes_count integer,
     comments_count integer,
+    published_time date,
     author character(32) REFERENCES author (hash)
 );

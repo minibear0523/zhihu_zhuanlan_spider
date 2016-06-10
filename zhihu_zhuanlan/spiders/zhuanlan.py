@@ -21,6 +21,14 @@ class ZhuanlanSpider(scrapy.Spider):
         'https://zhuanlan.zhihu.com/api/columns/huizi',
         'https://zhuanlan.zhihu.com/api/columns/luzern',
         'https://zhuanlan.zhihu.com/api/columns/vivivvv',
+        'https://zhuanlan.zhihu.com/api/columns/ChefElyn',
+        'https://zhuanlan.zhihu.com/api/columns/jszxs',
+        'https://zhuanlan.zhihu.com/api/columns/wehavetoeat',
+        'https://zhuanlan.zhihu.com/api/columns/newpie',
+        'https://zhuanlan.zhihu.com/api/columns/xiachufang',
+        'https://zhuanlan.zhihu.com/api/columns/xiepanda',
+        'https://zhuanlan.zhihu.com/api/columns/chaye',
+
     )
 
     def parse(self, response):
@@ -78,6 +86,7 @@ class ZhuanlanSpider(scrapy.Spider):
             item['slug'] = post['slug']
             item['likes_count'] = post['likesCount']
             item['comments_count'] = post['commentsCount']
+            item['published_time'] = post['publishedTime']
             item['author_hash'] = post['author']['hash']
             print item
             yield item

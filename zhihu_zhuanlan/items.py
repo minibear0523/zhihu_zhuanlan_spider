@@ -28,5 +28,6 @@ class PostItem(Item):
     slug = Field()
     likes_count = Field()
     comments_count = Field()
+    published_time = Field()
     # author域记录user的hash
     author_hash = Field()
