@@ -28,7 +28,6 @@ class ZhuanlanSpider(scrapy.Spider):
         'https://zhuanlan.zhihu.com/api/columns/xiachufang',
         'https://zhuanlan.zhihu.com/api/columns/xiepanda',
         'https://zhuanlan.zhihu.com/api/columns/chaye',
-
     )
 
     def parse(self, response):
