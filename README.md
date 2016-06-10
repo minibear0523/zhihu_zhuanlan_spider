@@ -5,7 +5,7 @@ CREATE TABLE author (
     bio text, 
     name text, 
     slug text UNIQUE, 
-    desc text
+    description text
 );
   
 # Post Table

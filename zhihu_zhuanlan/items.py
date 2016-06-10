@@ -16,6 +16,10 @@ class UserItem(Item):
     slug = Field()
     description = Field()
 
+    def format_sql(self):
+        # (item['hash'], item['bio'], item['name'], item['slug'], item['description'])
+        return self.hash, self.bio, self.name, self.slug, self.description
+
 
 class PostItem(Item):
     source_url = Field()
@@ -30,3 +34,6 @@ class PostItem(Item):
     comments_count = Field()
     # author域记录user的hash
     author_hash = Field()
+
+    def format_sql(self):
+        return self.source_url, self.url, self.title, self.title_image, self.summary, self.content, self.href, self.slug, self.likes_count, self.comments_count, self.author_hash

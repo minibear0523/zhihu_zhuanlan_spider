@@ -5,7 +5,7 @@ import json
 from zhihu_zhuanlan.items import UserItem, PostItem
 
 
-HOST = 'https://zhuanlan.zhihu.com/api/columns/{}/posts?limit={}&offset={}'
+HOST = 'https://zhuanlan.zhihu.com/api/columns/{}/posts?limit={}'
 LIMIT_MAX = 100
 
 
@@ -54,12 +54,13 @@ class ZhuanlanSpider(scrapy.Spider):
             item['source_url'] = post['sourceUrl']
             item['url'] = post['url']
             item['title'] = post['title']
-            item['title_image'] = post['title_image']
+            item['title_image'] = post['titleImage']
             item['summary'] = post['summary']
             item['content'] = post['content']
             item['href'] = post['href']
             item['slug'] = post['slug']
-            item['likes_count'] = post['likes_count']
-            item['comments_count'] = post['comments_count']
+            item['likes_count'] = post['likesCount']
+            item['comments_count'] = post['commentsCount']
             item['author_hash'] = post['author']['hash']
+            print item
             yield item
