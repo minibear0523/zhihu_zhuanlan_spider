@@ -3,6 +3,7 @@
 import scrapy
 import json
 from zhihu_zhuanlan.items import UserItem, PostItem
+from datetime import datetime
 
 
 HOST = 'https://zhuanlan.zhihu.com/api/columns/{}/posts?limit={}'
@@ -87,5 +88,5 @@ class ZhuanlanSpider(scrapy.Spider):
             item['comments_count'] = post['commentsCount']
             item['published_time'] = post['publishedTime']
             item['author_hash'] = post['author']['hash']
-            print item
+            item['db_create_time'] = datetime.now()
             yield item

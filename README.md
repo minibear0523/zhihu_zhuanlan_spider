@@ -1,5 +1,5 @@
 # Author Table
-CREATE TABLE author (
+CREATE TABLE zhihu_author (
     id serial PRIMARY KEY, 
     hash character(32) UNIQUE, 
     bio text, 
@@ -9,7 +9,7 @@ CREATE TABLE author (
 );
   
 # Post Table
-CREATE TABLE post (
+CREATE TABLE zhihu_post (
     id serial PRIMARY KEY,
     source_url text,
     url text unique,
@@ -22,5 +22,6 @@ CREATE TABLE post (
     likes_count integer,
     comments_count integer,
     published_time date,
-    author character(32) REFERENCES author (hash)
+    author character(32) REFERENCES zhihu_author (hash),
+    db_create_time timestamp
 );

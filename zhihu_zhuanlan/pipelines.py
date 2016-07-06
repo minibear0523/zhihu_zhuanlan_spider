@@ -5,7 +5,9 @@ from scrapy.exceptions import DropItem
 import psycopg2
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 InsertUserItemSql = "INSERT INTO author (hash, bio, name, slug, description) VALUES (%s, %s, %s, %s, %s);"
-InsertPostItemSql = "INSERT INTO post (source_url, url, title, title_image, summary, content, href, slug, likes_count, comments_count, published_time,author) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+InsertPostItemSql = "INSERT INTO post (source_url, url, title, title_image, summary, content, href, slug, likes_count, " \
+                    "comments_count, published_time,author, db_create_time) VALUES " \
+                    "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
 
 
 def format_item_sql(item):
@@ -13,7 +15,8 @@ def format_item_sql(item):
         return item['hash'], item['bio'], item['name'], item['slug'], item['description']
     elif isinstance(item, PostItem):
         return item['source_url'], item['url'], item['title'], item['title_image'], item['summary'], item['content'], \
-               item['href'], item['slug'], item['likes_count'], item['comments_count'], item['published_time'], item['author_hash']
+               item['href'], item['slug'], item['likes_count'], item['comments_count'], item['published_time'], \
+               item['author_hash'], item['db_create_time']
     else:
         return None
 
@@ -23,7 +26,7 @@ class DBPipeline(object):
     Store items into postgreSQL database with psycopg2
     """
     def open_spider(self, spider):
-        self.conn = psycopg2.connect('dbname=zhihu user=MiniBear')
+        self.conn = psycopg2.connect('dbname=fit_data user=MiniBear')
         self.cur = self.conn.cursor()
 
     def close_spider(self, spider):
